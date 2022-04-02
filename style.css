@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+  gap: 10px;
+}
+
+.file-picker {
+  font-size: 3rem;
+  color: #6aa4db;
+}
+
+.fa-microphone:hover {
+  cursor: pointer;
+}
+
+#file-picker {
+  display: none;
+}
+
+.audio-player {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 300px;
+  gap: 5px;
+  background: #6aa4db;
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: #ffffff;
+}
+
+.audio-player .controls {
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  gap: 5px;
+}
+
+.audio-player .controls:hover {
+  cursor: pointer;
+}
+
+.audio-player .progress-bar {
+  width: 100%;
+  height: 5px;
+  background: #ffffff17;
+  border-radius: 15px;
+}
+
+.audio-player .progress-bar .progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: #ffffff;
+  border-radius: 15px;
+}
+
+.audio-player .progress-bar:hover {
+  cursor: pointer;
+}
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script defer src="fontawesome.js"></script>
+    <script defer src="script.js"></script>
+    <title>Audio Player</title>
+</head>
+<body>
+
+    <!-- audio file picker -->
+    <div class="file-picker">
+        <label for="file-picker"><i class="fa-solid fa-microphone"></i></label>
+        <input type="file" name="file-picker" id="file-picker" accept="audio/*" capture="microphone">
+    </div>
+    <div class="banner">Choose audio to play</div>
+    <div class="audio-player">
+       <div class="controls">
+           <div class="play"><i class="fa-solid fa-play"></i></div>
+           <div class="pause" style="display: none;"><i class="fa-solid fa-pause"></i></div>
+           <div class="stop" style="display: none;"><i class="fa-solid fa-stop"></i></div>
+       </div>
+         <div class="progress-bar">
+              <div class="progress-bar-fill"></div>
+        </div>
+        <div class="time">
+            <span class="duration">0:00</span>
+        </div>
+    </div>
+</body>
+</html>
