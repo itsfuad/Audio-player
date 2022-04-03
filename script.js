@@ -4,10 +4,12 @@ let audio;
 $('.file-picker').on('change', function(e) {
 
     if (audio){
-        //remove all event listeners on audio
-        audio.removeEventListener('loadedmetadata');
-        audio.removeEventListener('timeupdate');
+        audio.removeEventListener('timeupdate', function(){});
+        audio.removeEventListener('progress',  function(){});   
+        audio.removeEventListener('loadeddata',  function(){});
+        stop();
     }
+    delete audio;
     audio = new Audio(URL.createObjectURL(e.target.files[0]));
     //get audio duration
     //get audio duration
@@ -16,7 +18,7 @@ audio.addEventListener('loadedmetadata', function() {
     let minutes = Math.floor(duration / 60);
     let seconds = Math.floor(duration % 60);
     $('.duration').html(`${minutes}:${seconds}`);
-    $('.banner').text('Audio Loaded');
+    $('.banner').text(`${e.target.files[0].name}`);
 });
 
 
@@ -33,27 +35,46 @@ audio.addEventListener('timeupdate', function() {
     console.log('File: ', e.target.files[0]);
 });
 
-$('.controls').on('click', function(evt) {
-    console.log(evt.target);
-    let target = evt.target;
-    if (target.classList.contains('fa-play')) {
+function play() {
+    if (audio) {
         audio.play();
         $('.play').hide();
         $('.pause').show();
         $('.stop').show();
     }
-    else if (target.classList.contains('fa-pause')) {
+}
+
+function pause() {
+    if (audio) {
         audio.pause();
         $('.pause').hide();
         $('.play').show();
         $('.stop').show();
     }
-    else if (target.classList.contains('fa-stop')) {
+}
+
+function stop() {
+    if (audio) {
         audio.pause();
         audio.currentTime = 0;
+        $('.progress-bar').width();
         $('.pause').hide();
         $('.play').show();
         $('.stop').hide();
+    }
+}
+
+$('.controls').on('click', function(evt) {
+    console.log(evt.target);
+    let target = evt.target;
+    if (target.classList.contains('fa-play')) {
+        play();
+    }
+    else if (target.classList.contains('fa-pause')) {
+        pause();
+    }
+    else if (target.classList.contains('fa-stop')) {
+        stop();
     }
 });
 
