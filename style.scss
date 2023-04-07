@@ -24,6 +24,11 @@ body{
     }
 }
 
+canvas{
+    position: absolute;
+    z-index: -1;
+    transform: translateY(-100px);
+}
 
 #file-picker{
     display: none;
