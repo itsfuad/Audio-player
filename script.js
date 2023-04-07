@@ -20,6 +20,16 @@ audio.addEventListener('loadedmetadata', function() {
     //make 00:00 format, use padStart to add 0 if seconds is less than 10
     $('.duration').html(`${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}`);
     $('.banner').text(`${e.target.files[0].name}`);
+
+    //init audio context
+    audioCtx = new AudioContext();
+    source = audioCtx.createMediaElementSource(audio);
+    analyser = audioCtx.createAnalyser();
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    analyser.fftSize = 128;
+    bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
 });
 
 
@@ -61,41 +71,27 @@ $('.progress-bar').on('click', function(evt) {
 const canvas = $('#canvas')[0];
 canvas.height = 300;
 const ctx = canvas.getContext('2d');
-const audioCtx = new AudioContext();
-const analyser = audioCtx.createAnalyser();
+
+//draw the audio bars. make sure to handle play/pause/stop and replay
+let audioCtx;
 let source;
+let analyser;
 let bufferLength;
 let dataArray;
 
-function play() {
-    if (audio) {
-        audio.play();
-        $('.play').hide();
-        $('.pause').show();
-        $('.stop').show();
-        //check if source is already created
-        if (source) {
-            source.disconnect();
-        }
-        source = audioCtx.createMediaElementSource(audio);
-        source.connect(analyser);
-        analyser.connect(audioCtx.destination);
-        /*analyser
-        bufferLength = analyser.frequencyBinCount;
-        dataArray = new Uint8Array(bufferLength);
-        */
-        analyser.fftSize = 128;
-        bufferLength = analyser.frequencyBinCount;
-        dataArray = new Uint8Array(bufferLength);
-        draw();
-    }
+function play(){
+    //play the audio and canvas
+    audio.play();
+    $('.play').hide();
+    $('.pause').show();
+    $('.stop').show();
+    draw();
 }
 
 function draw() {
+    //draw the audio bars
     requestAnimationFrame(draw);
-    //make different shapes and colors for different frequencies
     analyser.getByteFrequencyData(dataArray);
-    //clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let barWidth = (canvas.width / bufferLength);
     let barHeight;
@@ -103,14 +99,11 @@ function draw() {
     for (let i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i];
         ctx.fillStyle = '#6aa4db7a';
-        //round the corners of the rectangles
-             ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
+        ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
         ctx.fillStyle = '#6aa4db';
         ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, 2);
         x += barWidth + 1;
     }
-
-
 }
 
 function pause() {
